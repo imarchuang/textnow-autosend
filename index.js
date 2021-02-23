@@ -1,4 +1,4 @@
-const actionFunc = async (username, password, recipient, message) => {
+const actionFunc = async (username, password, recipient, message, cookies_str) => {
   console.log("textnow bot start...");
   const path = require("path");
   const fs = require("fs").promises;
@@ -87,8 +87,7 @@ function parseCookies(cookies_str, domain) {
 (async () => {
   console.log("start...");
   const config = require("./config");
-
-  const { username, password, recipient, message } = config;
+  const { username, password, recipient, message, cookies_str } = config;
   const arrUsername = username.split("|");
   const arrPassword = password.split("|");
   if (arrUsername.length === arrPassword.length) {
@@ -97,7 +96,7 @@ function parseCookies(cookies_str, domain) {
       const strPassword = arrPassword[i];
 
       console.log(`User:${strUsername} start...`);
-      await actionFunc(strUsername, strPassword, recipient, message);
+      await actionFunc(strUsername, strPassword, recipient, message, cookies_str);
       console.log(`User:${strUsername} end...`);
     }
   } else {
