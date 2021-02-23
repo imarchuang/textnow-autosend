@@ -26,6 +26,7 @@ const actionFunc = async (username, password, recipient, message) => {
       cookies = JSON.parse(cookiesJSON);
     } catch (error) {
       console.log("Failed to import existing cookies.");
+      if (cookies_str) cookies = parseCookies(cookies_str, 'www.textnow.com');
     }
 
     // Log into TextNow and get cookies
@@ -73,6 +74,14 @@ const actionFunc = async (username, password, recipient, message) => {
 
     process.exit(1);
   }
+};
+
+function parseCookies(cookies_str, domain) {
+    return cookies_str.split(';').map(pair => {
+        let name = pair.trim().slice(0, pair.trim().indexOf('='));
+        let value = pair.trim().slice(pair.trim().indexOf('=') + 1);
+        return { name, value, domain };
+    });
 };
 
 (async () => {
